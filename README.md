@@ -6,7 +6,7 @@
 - In ``visual`` mode, the selected text will be chosen.
 - This is best explained as an example:
 
-<img src="https://media.giphy.com/media/dyL10l9AM80FBQACdt/giphy.gif" width="600" height="600">
+<img src="https://media.giphy.com/media/dyL10l9AM80FBQACdt/giphy.gif">
 
 ## Mappings
 - By default, the mapping to execute the wrapping function is `<c-q>` (control-q).
