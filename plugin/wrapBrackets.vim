@@ -70,7 +70,7 @@ function! Wrap(mode, extra) abort
     if s:exists_wrap_brackets
         if b:autopairs_enabled
             let s:ap_enabled = 1
-            call AutoPairsToggle()
+            silent call AutoPairsToggle()
         endif
     endif
 
@@ -113,7 +113,7 @@ function! Wrap(mode, extra) abort
     " re-enable if it exists and was previously enabled
     if s:exists_wrap_brackets
         if !b:autopairs_enabled && s:ap_enabled
-            call AutoPairsToggle()
+            silent call AutoPairsToggle()
         endif
     endif
 endfunction
