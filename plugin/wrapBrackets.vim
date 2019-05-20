@@ -13,7 +13,8 @@ let g:print_mappings = get(g:, 'print_mappings',
             \ "javascript.jsx": "console.log", 
             \ "typescript": "console.log", 
             \ "vim": "echomsg string", 
-            \ "cpp": "std::cout"
+            \ "cpp": "std::cout",
+            \ "java": "System.out.println"
             \ })
 " the desired brackets for each language
 " cpp brackets require more than one character for opening and closing
@@ -23,7 +24,8 @@ let g:brackets = get(g:, "brackets",
             \ "javascript.jsx": "():", 
             \ "typescript": "();", 
             \ "vim": "()", 
-            \ "cpp": [" << ", ' << "\n";']
+            \ "cpp": [" << ", ' << "\n";'],
+            \ "java": "();"
             \ })
 " if you have a variable in between quotes, or angled brackets, these mappings
 " will make sure not to grab the quote
@@ -84,13 +86,13 @@ function! Wrap(mode, extra) abort
         let s:char_before = strcharpart(strpart(getline('.'), col('.') - 1), 0, 1)
         if col(".") == 1
             exe "norm! i" . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0]
-            exe "norm! pa" . g:brackets[&filetype][1:]
+            exe "norm! pa" . g:brackets[&filetype][1]
         elseif s:char_on != -1 || s:char_before != -1
             exe "norm! i" . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0]
-            exe "norm! pa" . g:brackets[&filetype][1:]
+            exe "norm! pa" . g:brackets[&filetype][1]
 		else
 			exe "norm! i " . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0]
-            exe "norm! pa" . g:brackets[&filetype][1:]
+            exe "norm! pa" . g:brackets[&filetype][1]
         endif
         "exe "norm! hp"
     elseif a:mode == 1
@@ -99,11 +101,11 @@ function! Wrap(mode, extra) abort
         let s:char_before = strcharpart(strpart(getline('.'), col('.') - 1), 0, 1)
         exe "norm! O"
         if col('.') == 1
-            exe "norm! i" . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0] . s:selection . g:brackets[&filetype][1:]
+            exe "norm! i" . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0] . s:selection . g:brackets[&filetype][1]
         elseif s:char_on != -1 || s:char_before != -1
-            exe "norm! i" . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0] . s:selection . g:brackets[&filetype][1:]
+            exe "norm! i" . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0] . s:selection . g:brackets[&filetype][1]
         else
-            exe "norm! i " . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0] . s:selection . g:brackets[&filetype][1:]    
+            exe "norm! i " . repeat(" ", s:line_indent) . s:printer . g:brackets[&filetype][0] . s:selection . g:brackets[&filetype][1]    
         endif
         "exe "norm! ha" . s:selection
     endif
