@@ -34,6 +34,7 @@ let g:before_wrappings = get(g:, 'before_wrappings', ["\"", "\'", '>', '<'])
 " If 0: wraps the word with the print statement only
 let g:keep_copy = get(g:, 'keep_copy', 1)
 let g:wrap_mapping = get(g:, 'wrap_mapping', "<c-q>")
+let g:bracketsOnly = get(g:, 'bracketsOnly', 0)
 " }}
 
 " {{ Helper Function to grab the visual selection CREDIT: https://stackoverflow.com/questions/1533565/how-to-get-visually-selected-text-in-vimscript
@@ -64,7 +65,7 @@ function! GetIndent() abort
 endfunction
 
 " {{ Main function that performs the wrapping 
-function! Wrap(mode, extra) abort
+function! Wrap(mode, extra, noPrint) abort
     " disabled the plugin autopairs if it exists
     let s:ap_enabled = 0
     if s:exists_wrap_brackets
@@ -74,10 +75,17 @@ function! Wrap(mode, extra) abort
         endif
     endif
 
+    if a:noPrint
+        let s:printer = ''
+        let s:extra_copy = 0
+    else
+        let s:printer = g:print_mappings[&filetype]
+        let s:extra_copy = a:extra
+    endif
     let s:printer = g:print_mappings[&filetype]
     let s:line_indent = GetIndent()
     if a:mode == 0
-        if a:extra
+        if s:extra_copy
             exe "norm! yiwO"
         else
             exe "norm! yiwdiw"
@@ -118,6 +126,5 @@ function! Wrap(mode, extra) abort
     endif
 endfunction
 " }}
-
-execute "nnoremap " . g:wrap_mapping . " :call Wrap(0," . g:keep_copy .  ")<Enter>"
-execute "xnoremap " . g:wrap_mapping . " :call Wrap(1," . g:keep_copy .  ")<Enter>"
+execute "nnoremap " . g:wrap_mapping . " :call Wrap(0," . g:keep_copy .  "," . g:bracketsOnly . ")<Enter>"
+execute "xnoremap " . g:wrap_mapping . " :call Wrap(1," . g:keep_copy .  ", " . g:bracketsOnly . ")<Enter>"
