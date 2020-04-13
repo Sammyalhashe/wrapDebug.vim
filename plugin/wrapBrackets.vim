@@ -21,7 +21,7 @@ let g:print_mappings = get(g:, 'print_mappings',
 " brackets, so an array is used to store the opening and closing 'parentheses'
 let g:brackets = get(g:, "brackets", 
             \ {"python": "()", 
-            \ "javascript.jsx": "():", 
+            \ "javascript.jsx": "();", 
             \ "typescript": "();", 
             \ "vim": "()", 
             \ "cpp": [" << ", ' << "\n";'],
